@@ -1,0 +1,14 @@
+package com.ebc.contact_app.viewmodel
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ebc.contact_app.dao.ContactDao
+import com.ebc.contact_app.entity.Contact
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+
+class ContactViewModel (private val dao: ContactDao): ViewModel() {
+    val contacts: StateFlow<List<Contact>> = dao.getAll()
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+}
